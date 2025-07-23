@@ -1,7 +1,4 @@
 import asyncio
-
-from aiogram.types import MenuButtonCommands, BotCommand
-
 from logs import setup_logging
 from create_bot import dp, bot
 from handlers import start_router, user_action_router
@@ -15,6 +12,7 @@ async def main():
 
     dp.include_router(start_router)
     dp.include_router(user_action_router)
+
     await dp.start_polling(bot)
 
 

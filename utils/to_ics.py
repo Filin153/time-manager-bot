@@ -6,12 +6,15 @@ import os
 import logging
 
 class ToCalendar:
-    BASE_USER_ICS_DIR = "./user_ics"
+    BASE_USER_ICS_DIR = "./volumes/user_ics"
 
     def __init__(self):
         os.makedirs(self.BASE_USER_ICS_DIR, exist_ok=True)
         self._user_file_path = None
         self._user_tg_id = None
+
+    def get_user_ics_path(self, user_id: int):
+        return f"{self.BASE_USER_ICS_DIR}/{user_id}.ics"
 
     @property
     def user_tg_id(self):

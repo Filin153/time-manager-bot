@@ -9,7 +9,24 @@ services:
       - app
     env_file:
       - .env
-
+    volumes:
+      - ./volumes:/app/volumes
+    command: "python bot.py"
+  
+  api:
+    build: .
+    restart: always
+    ports:
+       - 1298:8080
+    networks:
+      - app
+    env_file:
+      - .env
+    depends_on:
+      - bot
+    volumes:
+      - ./volumes:/app/volumes
+    command: "python api.py"
 
   db:
     # https://github.com/fboulnois/pg_uuidv7
