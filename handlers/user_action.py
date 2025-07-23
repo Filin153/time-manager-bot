@@ -1,8 +1,11 @@
 from aiogram import Router
 from aiogram.types import Message
-from schemas import UserActionCreateSchema
+from schemas import UserActionCreateSchema, UserActionDTOSchema
 from repository import UserActionRepo
 from database.database import get_async_session
+
+from utils.to_ics import ToCalendar
+
 
 router = Router()
 
@@ -30,12 +33,21 @@ async def add_user_action(message: Message):
                 stop=True
             )
 
-        await user_a_repo.add(
+        user_a_orm = await user_a_repo.add(
             session=session,
             action_data=user_a_create
         )
-        
+
         await session.commit()
+
+        calendar = ToCalendar()
+        await calendar.update_user_ics(UserActionDTOSchema(
+            user_tg_id=user_a_create.user_tg_id,
+            action=user_a_create.action,
+            create_at=user_a_create.create_at,
+            update_at=user_a_create.update_at,
+        ))
+
     
     await message.reply("Успешно добавленно!")
 

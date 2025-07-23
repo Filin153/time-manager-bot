@@ -12,6 +12,8 @@ aiosignal==1.4.0
     # via aiohttp
 annotated-types==0.7.0
     # via pydantic
+arrow==1.3.0
+    # via ics
 async-timeout==5.0.1
     # via
     #   aiohttp
@@ -19,13 +21,17 @@ async-timeout==5.0.1
 asyncpg==0.30.0
     # via time-manager-bot (pyproject.toml)
 attrs==25.3.0
-    # via aiohttp
+    # via
+    #   aiohttp
+    #   ics
 certifi==2025.7.14
     # via aiogram
 frozenlist==1.7.0
     # via
     #   aiohttp
     #   aiosignal
+ics==0.7.2
+    # via time-manager-bot (pyproject.toml)
 idna==3.10
     # via yarl
 magic-filter==1.0.12
@@ -49,10 +55,22 @@ pydantic-core==2.33.2
     # via pydantic
 pydantic-settings==2.10.1
     # via time-manager-bot (pyproject.toml)
+python-dateutil==2.9.0.post0
+    # via
+    #   arrow
+    #   ics
 python-dotenv==1.1.1
     # via pydantic-settings
+six==1.17.0
+    # via
+    #   ics
+    #   python-dateutil
 sqlalchemy==2.0.41
     # via time-manager-bot (pyproject.toml)
+tatsu==5.13.1
+    # via ics
+types-python-dateutil==2.9.0.20250708
+    # via arrow
 typing-extensions==4.14.1
     # via
     #   aiogram

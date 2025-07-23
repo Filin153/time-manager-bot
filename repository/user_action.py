@@ -11,7 +11,7 @@ class UserActionRepo:
             **action_data.model_dump()
         )
         session.add(user_a_orm)
-        return True
+        return user_a_orm
     
     @staticmethod
     async def set_stop(session: AsyncSession, uuid: str, stop: bool):
@@ -21,14 +21,22 @@ class UserActionRepo:
     
     @staticmethod
     async def get_by_filter(session: AsyncSession, limit: int = 10, offset: int = 0, **kwargs) -> list[UserActionORM]:
-        query = select(UserActionORM).filter_by(**kwargs).limit(limit).offset(offset)
+        query = select(UserActionORM).filter_by(**kwargs).offset(offset)
+
+        if limit != -1:
+            query = query.limit(limit)
+
         res = await session.execute(query)
         res = res.scalars().all()
         return res
     
     @staticmethod
     async def get_by_filter_from_end(session: AsyncSession, limit: int = 10, offset: int = 0, **kwargs) -> list[UserActionORM]:
-        query = select(UserActionORM).order_by(desc(UserActionORM.create_at)).filter_by(**kwargs).limit(limit).offset(offset)
+        query = select(UserActionORM).order_by(desc(UserActionORM.create_at)).filter_by(**kwargs).offset(offset)
+
+        if limit != -1:
+            query = query.limit(limit)
+
         res = await session.execute(query)
         res = res.scalars().all()
         return res
