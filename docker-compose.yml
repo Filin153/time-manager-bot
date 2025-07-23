@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+
+  bot:
+    build: .
+    image: docker.igoose.ru/time_manager:latest
+    restart: always
+    networks:
+      - app
+    env_file:
+      - .env
+
+
+  db:
+    # https://github.com/fboulnois/pg_uuidv7
+    image: ghcr.io/fboulnois/pg_uuidv7:1.6.0
+    restart: always
+#    shm_size: 512mb
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+    networks:
+      - app
+    ports:
+      - "6666:5432"
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB_NAME}
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    networks:
+      - app
+    ports:
+      - "6614:8080"
+
+
+
+networks:
+  app:
+    driver: bridge
+
+
+
+
