@@ -4,7 +4,6 @@ services:
 
   bot:
     build: .
-    image: docker.igoose.ru/time_manager:latest
     restart: always
     networks:
       - app
